@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>Playable Ad</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+      #GameCanvas { width: 100%; height: 100%; }
+    </style>
+
+    <!--
+      ╔══════════════════════════════════════════════════════════════════════╗
+      ║  PlayTurbo / Mindworks Playable Ad API Bridge                       ║
+      ║  https://www.playturbo.com/review/doc                               ║
+      ║                                                                     ║
+      ║  HOW TO USE IN YOUR COCOS GAME SCRIPTS                              ║
+      ║  ─────────────────────────────────────────────────────────────────  ║
+      ║  1. When all assets have loaded (e.g. onLoad or scene ready):       ║
+      ║       window.gameReady && window.gameReady();                       ║
+      ║                                                                     ║
+      ║  2. Override window.gameStart to begin/resume your gameplay:        ║
+      ║       window.gameStart = function() { myGame.start(); };            ║
+      ║                                                                     ║
+      ║  3. When the player wins or loses:                                  ║
+      ║       window.gameEnd && window.gameEnd();                           ║
+      ║                                                                     ║
+      ║  4. When the player taps "play again":                              ║
+      ║       window.gameRetry && window.gameRetry();                       ║
+      ║                                                                     ║
+      ║  5. On CTA / download button tap (NEVER use window.open directly):  ║
+      ║       window.install && window.install();                           ║
+      ║                                                                     ║
+      ║  6. Override window.gameClose for cleanup when the ad is closed:    ║
+      ║       window.gameClose = function() { myGame.pause(); };            ║
+      ╚══════════════════════════════════════════════════════════════════════╝
+    -->
+    <script id="playturbo-api-bridge">
+    (function () {
+      'use strict';
+
+      // Outbound calls (game → platform)
+      // Safe no-ops when running outside the PlayTurbo player.
+      if (typeof window.gameReady !== 'function') {
+        window.gameReady = function () { console.log('[PlayTurbo] gameReady'); };
+      }
+      if (typeof window.gameEnd !== 'function') {
+        window.gameEnd = function () { console.log('[PlayTurbo] gameEnd'); };
+      }
+      if (typeof window.gameRetry !== 'function') {
+        window.gameRetry = function () { console.log('[PlayTurbo] gameRetry'); };
+      }
+      // CTA handler – opens the store page.
+      // NEVER use window.open() or <a href> directly; always call window.install().
+      if (typeof window.install !== 'function') {
+        window.install = function () { console.log('[PlayTurbo] install (CTA clicked)'); };
+      }
+
+      // Inbound calls (platform → game)
+      if (typeof window.gameStart !== 'function') {
+        window.gameStart = function () { console.log('[PlayTurbo] gameStart (stub)'); };
+      }
+      if (typeof window.gameClose !== 'function') {
+        window.gameClose = function () { console.log('[PlayTurbo] gameClose (stub)'); };
+      }
+    })();
+    </script>
+  </head>
+  <body>
+    <canvas id="GameCanvas" oncontextmenu="return false;"></canvas>
+
+    <!-- Cocos Creator injects its scripts here during the build step. -->
+    <!-- The build-playturbo.js script will then inline them into this file. -->
+  </body>
+</html>
