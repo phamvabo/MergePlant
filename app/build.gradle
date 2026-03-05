@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion 34
+    defaultConfig {
+        applicationId "com.mergeplant"
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+
+        // Override these values via your local.properties or CI environment variables.
+        def mintegralAppId = project.findProperty("MINTEGRAL_APP_ID") ?: ""
+        def mintegralAppKey = project.findProperty("MINTEGRAL_APP_KEY") ?: ""
+        buildConfigField "String", "MINTEGRAL_APP_ID", "\"${mintegralAppId}\""
+        buildConfigField "String", "MINTEGRAL_APP_KEY", "\"${mintegralAppKey}\""
+
+        def mintegralBannerPlacementId = project.findProperty("MINTEGRAL_BANNER_PLACEMENT_ID") ?: ""
+        def mintegralBannerAdUnitId = project.findProperty("MINTEGRAL_BANNER_AD_UNIT_ID") ?: ""
+        buildConfigField "String", "MINTEGRAL_BANNER_PLACEMENT_ID", "\"${mintegralBannerPlacementId}\""
+        buildConfigField "String", "MINTEGRAL_BANNER_AD_UNIT_ID", "\"${mintegralBannerAdUnitId}\""
+
+        def mintegralInterstitialPlacementId = project.findProperty("MINTEGRAL_INTERSTITIAL_PLACEMENT_ID") ?: ""
+        def mintegralInterstitialAdUnitId = project.findProperty("MINTEGRAL_INTERSTITIAL_AD_UNIT_ID") ?: ""
+        buildConfigField "String", "MINTEGRAL_INTERSTITIAL_PLACEMENT_ID", "\"${mintegralInterstitialPlacementId}\""
+        buildConfigField "String", "MINTEGRAL_INTERSTITIAL_AD_UNIT_ID", "\"${mintegralInterstitialAdUnitId}\""
+
+        def mintegralRewardedPlacementId = project.findProperty("MINTEGRAL_REWARDED_PLACEMENT_ID") ?: ""
+        def mintegralRewardedAdUnitId = project.findProperty("MINTEGRAL_REWARDED_AD_UNIT_ID") ?: ""
+        buildConfigField "String", "MINTEGRAL_REWARDED_PLACEMENT_ID", "\"${mintegralRewardedPlacementId}\""
+        buildConfigField "String", "MINTEGRAL_REWARDED_AD_UNIT_ID", "\"${mintegralRewardedAdUnitId}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
+
+    // Mintegral SDK
+    def mintegral_version = "16.6.71"
+    implementation "com.mbridge.msdk.oversea:mbjscommon:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:playercommon:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:reward:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:interstitialvideo:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:interstitial:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:mbbanner:$mintegral_version"
+    implementation "com.mbridge.msdk.oversea:mbnative:$mintegral_version"
+}
