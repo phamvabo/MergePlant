@@ -130,9 +130,63 @@ The PlayTurbo API bridge prints stub messages to the console so you can verify t
 
 ---
 
-## Mintegral SDK Integration (Android)
+## Cocos Creator → Mintegral ZIP Build
 
-## Mintegral SDK Integration
+Mintegral requires playable ads to be submitted as a **ZIP archive** with a specific naming convention that links the ZIP name, inner folder, and HTML file together.
+
+### Mintegral ZIP structure
+
+```
+{adName}.zip
+  └── {adName}/
+        └── {adName}.html    ← single self-contained HTML (all assets inlined)
+```
+
+**Rules enforced by the build script:**
+
+| Rule | Detail |
+|------|--------|
+| Consistent naming | ZIP file name = inner folder name = HTML file name (without extension) |
+| No external requests | All JS, CSS, images, and audio inlined as Base64 data URIs |
+| UTF-8 charset | Injected if absent |
+| Mobile viewport meta | Injected if absent |
+| PlayTurbo API bridge | `gameReady`, `gameEnd`, `gameRetry`, `install`, `gameStart`, `gameClose` |
+| File size ≤ 5 MB | Script warns if the uncompressed HTML exceeds the Mintegral limit |
+| Ad name validation | Only letters, numbers, underscores; max 50 characters |
+
+### Build command
+
+```bash
+# Default: inputDir=build/web-mobile, adName=playable, outputDir=dist
+node scripts/build-mintegral.js
+
+# Or via npm:
+npm run build:mintegral
+
+# Custom parameters:
+node scripts/build-mintegral.js [inputDir] [adName] [outputDir]
+
+# Example:
+node scripts/build-mintegral.js build/web-mobile merge_plant_v1 dist
+# → dist/merge_plant_v1.zip
+#     └── merge_plant_v1/
+#           └── merge_plant_v1.html
+```
+
+### Test before uploading
+
+Use the **Mindworks Playable Testing Tool** to validate your ZIP before uploading to a campaign:  
+👉 [https://www.mindworks-creative.com/review/](https://www.mindworks-creative.com/review/)
+
+The tool checks:
+- Correct ZIP / folder / HTML naming convention
+- Required API calls (`window.install()`, `window.gameEnd()`, etc.)
+- File size within the 5 MB limit
+- No missing or broken asset references
+
+---
+
+## Mintegral SDK Integration (Android)
 
 [Mintegral](https://www.mintegral.com/) is a global programmatic advertising platform offering Banner, Interstitial, Rewarded Video, and Native ad formats.
 
