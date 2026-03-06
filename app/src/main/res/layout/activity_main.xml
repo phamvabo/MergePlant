@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Banner Ad Container -->
+    <FrameLayout
+        android:id="@+id/banner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btn_load_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Banner" />
+
+    <Button
+        android:id="@+id/btn_load_interstitial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Interstitial" />
+
+    <Button
+        android:id="@+id/btn_show_interstitial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Interstitial" />
+
+    <Button
+        android:id="@+id/btn_load_rewarded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Rewarded Video" />
+
+    <Button
+        android:id="@+id/btn_show_rewarded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Rewarded Video" />
+
+</LinearLayout>

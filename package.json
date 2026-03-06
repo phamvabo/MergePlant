@@ -1,0 +1,12 @@
+{
+  "name": "mergeplant-playturbo-tools",
+  "version": "1.0.0",
+  "description": "Build tools for packaging a Cocos Creator web-mobile build into PlayTurbo and Mintegral-compliant playable ad files",
+  "scripts": {
+    "build:playturbo": "node scripts/build-playturbo.js",
+    "build:mintegral": "node scripts/build-mintegral.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
